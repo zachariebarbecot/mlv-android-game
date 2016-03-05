@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MLVAndroidGame</string>
+    <string name="app_package">com.mlvandroidgame</string>
+
+    <string name="game_over">Game Over</string>
+
+    <string name="Highscores">Top Scores</string>
+    <string name="Enter_highscore_name">Félicitation! Entrez votre nom</string>
+    <string name="Highscore_hint">Votre nom</string>
+
+    <string name="Paused">Pause</string>
+    <string name="Tap_to_start">Tapez pour démarrer</string>
+
+    <string name="Play">Jouer</string>
+
+    <!-- Url Server GPS DATA -->
+    <string name="url">http://kridanesara.6te.net/servicegps.php</string>
+    <string name="licence_text">
+        L\'application MLVAndroidGame a été réalisé par une équipe d\'étudiant de l\'université Paris-Est Marne-la-Vallée.
+        L\'équipe est composée de 4 étudiants: BARBECOT Zacharie, BERTILLE Dider, KRIDANE Sara et TOURE OUMAR.
+    </string>
+    <string name="titre_licence"><b>Presentation de l app</b></string>
+    <string name="accept_licence">Lu et accepté</string>
+
+    <string name="title_activity_share">Partagez</string>
+</resources>
