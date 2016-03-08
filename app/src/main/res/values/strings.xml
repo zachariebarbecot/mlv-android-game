@@ -16,10 +16,20 @@
     <string name="Play">Play</string>
 
     <!-- Url Server GPS DATA -->
-    <string name="url">http://kridanesara.6te.net/servicegps.php</string>
+    <string name="url">http://kridanesara.6te.net</string>
     <string name="licence_text">
-        MLVAndroidGame\s App was made by a student team from the university Paris-Est Marne-la-Vallée.
-        The team is composed of 4 students: BARBECOT Zacharie, BERTILLE Dider, KRIDANE Sara et TOURE OUMAR.
+        <![CDATA[
+        MLVAndroidGame\s App was made by a student team from the university Paris-Est Marne-la-Vallée.<br />
+        The team is composed of 4 students:<br />
+        BARBECOT Zacharie<br />
+        BERTILLE Dider<br />
+        KRIDANE Sara<br />
+        TOURE OUMAR<br />
+        <br />
+        Geololalisation: <a href="http://kridanesara.6te.net">http://kridanesara.6te.net</a>
+        <br />
+        <br />
+        ]]>
     </string>
     <string name="titre_licence"><b>Presentation of the app</b></string>
     <string name="accept_licence">Read and accepted</string>

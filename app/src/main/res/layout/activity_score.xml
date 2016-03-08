@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:background="@drawable/background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        android:id="@+id/scoreTextView"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/scoreTextView"
+        android:id="@+id/tableLayout">
+        <TableRow android:id="@+id/tableRow0">
+
+            <TextView android:id="@+id/top0"
+                android:text="#"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/date0"
+                android:text="Date"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/topscore0"
+                android:text="Score"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow1">
+
+            <TextView android:id="@+id/top1"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/date1"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/topscore1"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow2">
+
+            <TextView android:id="@+id/top2"
+                android:text="2"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/date2"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/topscore2"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow3">
+
+            <TextView android:id="@+id/top3"
+                android:text="3"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/date3"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/topscore3"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow4">
+
+            <TextView android:id="@+id/top4"
+                android:text="4"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/date4"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/topscore4"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow5">
+
+            <TextView android:id="@+id/top5"
+                android:text="5"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/date5"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+            <TextView android:id="@+id/topscore5"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="25dp"
+                android:layout_weight="1" />
+
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

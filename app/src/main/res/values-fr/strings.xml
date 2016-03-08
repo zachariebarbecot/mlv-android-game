@@ -18,8 +18,18 @@
     <!-- Url Server GPS DATA -->
     <string name="url">http://kridanesara.6te.net/servicegps.php</string>
     <string name="licence_text">
-        L\'application MLVAndroidGame a été réalisé par une équipe d\'étudiant de l\'université Paris-Est Marne-la-Vallée.
-        L\'équipe est composée de 4 étudiants: BARBECOT Zacharie, BERTILLE Dider, KRIDANE Sara et TOURE OUMAR.
+        <![CDATA[
+        L\'application MLVAndroidGame a été réalisé par une équipe d\'étudiant de l\'université Paris-Est Marne-la-Vallée.<br />
+        L\'équipe est composée de 4 étudiants:<br />
+        BARBECOT Zacharie<br />
+        BERTILLE Dider<br />
+        KRIDANE Sara<br />
+        TOURE OUMAR<br />
+        <br />
+        Géololalisation: <a href="http://kridanesara.6te.net">http://kridanesara.6te.net</a>
+        <br />
+        <br />
+        ]]>
     </string>
     <string name="titre_licence"><b>Presentation de l app</b></string>
     <string name="accept_licence">Lu et accepté</string>

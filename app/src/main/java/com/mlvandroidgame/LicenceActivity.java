@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,12 +16,6 @@ public class LicenceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         setContentView(R.layout.activity_licence);
 
         TextView textViewResource = (TextView) findViewById(R.id.text_html_resource);
@@ -34,10 +26,9 @@ public class LicenceActivity extends Activity {
         this.enabled.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(LicenceActivity.this, ShareActivity.class);
+                Intent i = new Intent(LicenceActivity.this, MenuActivity.class);
                 startActivity(i);
                 finish();
-                LicenceActivity.this.finish();
             }
         });
     }
