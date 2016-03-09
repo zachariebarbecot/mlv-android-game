@@ -3,13 +3,15 @@ package com.mlvandroidgame;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Space;
+import android.widget.Toast;
 
 public class MenuActivity extends Activity {
 
-    private Button share, game, score;
+    private Button share, game, score,licence;
+    private boolean exit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,7 @@ public class MenuActivity extends Activity {
         this.share = (Button) findViewById(R.id.shareButton);
         this.game = (Button) findViewById(R.id.gameButton);
         this.score = (Button) findViewById(R.id.scoreButton);
+        this.licence = (Button) findViewById(R.id.licenceButton);
 
 
         this.share.setOnClickListener(new View.OnClickListener() {
@@ -40,10 +43,36 @@ public class MenuActivity extends Activity {
         this.score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, SplashActivity.class);
+                Intent intent = new Intent(MenuActivity.this, ScoreActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+
+        this.licence.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, LicenceActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit)
+            MenuActivity.this.finish();
+        else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3000);
+        }
     }
 }

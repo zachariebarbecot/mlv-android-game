@@ -49,6 +49,10 @@ public class SplashActivity extends Activity {
         splash(admins);
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     private void splash(final ArrayList<Admin> admins) {
         new Handler().postDelayed(new Runnable() {
             @Override

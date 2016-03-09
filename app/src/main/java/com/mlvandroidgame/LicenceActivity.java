@@ -32,4 +32,11 @@ public class LicenceActivity extends Activity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(LicenceActivity.this, MenuActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

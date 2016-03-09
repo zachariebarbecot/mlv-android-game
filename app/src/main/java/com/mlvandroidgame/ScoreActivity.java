@@ -1,6 +1,7 @@
 package com.mlvandroidgame;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -42,5 +43,12 @@ public class ScoreActivity extends Activity {
                 this.scores[i].setText(scoreArrayList.get(i).getScore());
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(ScoreActivity.this, MenuActivity.class);
+        startActivity(i);
+        finish();
     }
 }
