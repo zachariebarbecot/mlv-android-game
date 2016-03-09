@@ -8,8 +8,13 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
+import com.mlvandroidgame.databases.Admin;
 import com.mlvandroidgame.databases.AdminDataSource;
+import com.mlvandroidgame.services.ShowLocationService;
+
+import java.util.ArrayList;
 
 public class SplashActivity extends Activity {
 
@@ -20,6 +25,9 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spash);
+
+        // GPS service
+        startService(new Intent(this, ShowLocationService.class));
 
         /*
          * GET IMEI
@@ -37,21 +45,27 @@ public class SplashActivity extends Activity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        if(adminDataSource.getAdminByImei(imei).isEmpty()) {
-            splash();
-        }
+        ArrayList<Admin> admins = this.adminDataSource.getAdminByImei(imei);
+        splash(admins);
     }
 
-    private void splash() {
+    private void splash(final ArrayList<Admin> admins) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent;
-                if (!adminDataSource.getAdminByImei(imei).isEmpty()) {
+                if (!admins.isEmpty()) {
+                    if(!admins.get(0).getImei().equals(imei)){
+                        Toast toast = Toast.makeText(getApplicationContext(), "Not Admin: " + imei, Toast.LENGTH_SHORT);
+                        toast.show();
+                        finish();
+                    }
                     intent = new Intent(SplashActivity.this, MenuActivity.class);
                 } else {
-                    //Admin admin = new Admin(imei);
-                    //adminDataSource.addAdmin(admin);
+                    Admin admin = new Admin(imei);
+                    adminDataSource.addAdmin(admin);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Add Admin: " + imei, Toast.LENGTH_SHORT);
+                    toast.show();
                     intent = new Intent(SplashActivity.this, LicenceActivity.class);
                 }
                 startActivity(intent);

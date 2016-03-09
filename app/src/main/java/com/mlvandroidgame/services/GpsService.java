@@ -1,5 +1,7 @@
 package com.mlvandroidgame.services;
 
+import android.util.Log;
+
 import com.mlvandroidgame.utils.JSONParser;
 
 import org.apache.http.NameValuePair;
@@ -19,22 +21,22 @@ public class GpsService {
     private String numero;
     private String imei;
     private float batteryPct;
-    private String country;
     private double latitude;
     private double longitude;
-    private Date date;
+    private Date dateGps;
+    private Date dateCell;
     private int score;
 
-    public GpsService(String url, String numero, String imei, float batteryPct, String country,
-                      double latitude, double longitude, Date date, int score) {
+    public GpsService(String url, String numero, String imei, float batteryPct,
+                      double latitude, double longitude, Date dateGps, Date dateCell, int score) {
         this.url = url;
         this.numero = numero;
         this.imei = imei;
         this.batteryPct = batteryPct;
-        this.country = country;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.date = date;
+        this.dateGps = dateGps;
+        this.dateCell = dateCell;
         this.score = score;
     }
 
@@ -43,17 +45,19 @@ public class GpsService {
         JSONParser jsonParser = new JSONParser();
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<>();
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
         nameValuePairs.add(new BasicNameValuePair("numero", numero));
         nameValuePairs.add(new BasicNameValuePair("imei", imei));
-        nameValuePairs.add(new BasicNameValuePair("batteryPct", format.format(batteryPct)));
-        nameValuePairs.add(new BasicNameValuePair("country", country));
+        nameValuePairs.add(new BasicNameValuePair("batteryPct", String.valueOf(batteryPct)));
         nameValuePairs.add(new BasicNameValuePair("latitude", String.valueOf(latitude)));
         nameValuePairs.add(new BasicNameValuePair("longitude", String.valueOf(longitude)));
-        nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
+        nameValuePairs.add(new BasicNameValuePair("dateGps", format.format(dateGps)));
+        nameValuePairs.add(new BasicNameValuePair("dateCell", format.format(dateCell)));
         nameValuePairs.add(new BasicNameValuePair("score", String.valueOf(score)));
 
         JSONObject jsonObject = jsonParser.getJSONFromUrl(url, nameValuePairs);
+        Log.i("JSON DATA SEND", nameValuePairs.toString());
+
     }
 }
