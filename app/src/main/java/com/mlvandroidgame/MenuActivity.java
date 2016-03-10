@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class MenuActivity extends Activity {
 
-    private Button share, game, score,licence;
+    private Button share, game, score,licence, map;
     private boolean exit = false;
 
     @Override
@@ -22,6 +22,7 @@ public class MenuActivity extends Activity {
         this.game = (Button) findViewById(R.id.gameButton);
         this.score = (Button) findViewById(R.id.scoreButton);
         this.licence = (Button) findViewById(R.id.licenceButton);
+        this.map = (Button) findViewById(R.id.mapButton);
 
 
         this.share.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +58,15 @@ public class MenuActivity extends Activity {
                 finish();
             }
         });
+
+        this.map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, MapsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -64,7 +74,7 @@ public class MenuActivity extends Activity {
         if (exit)
             MenuActivity.this.finish();
         else {
-            Toast.makeText(this, "Press Back again to Exit.",
+            Toast.makeText(this, getResources().getText(R.string.Tap_to_exit),
                     Toast.LENGTH_SHORT).show();
             exit = true;
             new Handler().postDelayed(new Runnable() {

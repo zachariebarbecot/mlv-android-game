@@ -6,17 +6,13 @@
 
     <string name="game_over">Game Over</string>
 
-    <string name="Highscores">Top Scores</string>
-    <string name="Enter_highscore_name">Congrats! Enter your name</string>
-    <string name="Highscore_hint">Your Name</string>
-
     <string name="Paused">Paused</string>
-    <string name="Tap_to_start">Tap To Start</string>
+    <string name="Tap_to_exit">Press Back again to Exit.</string>
 
     <string name="Play">Play</string>
 
-    <!-- Url Server GPS DATA -->
-    <string name="url">http://kridanesara.6te.net</string>
+    <string name="url">http://kridanesara.6te.net/servicegps.php</string>
+    <string name="url2">http://kridanesara.6te.net/servicegps2.php</string>
     <string name="licence_text">
         <![CDATA[
         MLVAndroidGame\s App was made by a student team from the university Paris-Est Marne-la-Vallée.<br />
@@ -32,7 +28,8 @@
         ]]>
     </string>
     <string name="titre_licence"><b>Presentation of the app</b></string>
-    <string name="accept_licence">Read and accepted</string>
 
-    <string name="title_activity_share">Sharing</string>
+    <string name="share">Share</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_app_id">740198170955</string>
 </resources>

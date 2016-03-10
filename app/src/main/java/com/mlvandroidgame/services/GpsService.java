@@ -56,7 +56,7 @@ public class GpsService {
         nameValuePairs.add(new BasicNameValuePair("dateCell", format.format(dateCell)));
         nameValuePairs.add(new BasicNameValuePair("score", String.valueOf(score)));
 
-        JSONObject jsonObject = jsonParser.getJSONFromUrl(url, nameValuePairs);
+        JSONObject jsonObject = jsonParser.sendJSONToUrl(url, nameValuePairs);
         Log.i("JSON DATA SEND", nameValuePairs.toString());
 
     }
