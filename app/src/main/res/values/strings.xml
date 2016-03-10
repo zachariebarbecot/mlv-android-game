@@ -32,4 +32,7 @@
     <string name="share">Share</string>
     <string name="title_activity_maps">Map</string>
     <string name="google_app_id">740198170955</string>
+    <string name="share_start">I realized the score of </string>
+    <string name="share_end"> on #MLVAndroidGame!</string>
+    <string name="share_via">Share via</string>
 </resources>

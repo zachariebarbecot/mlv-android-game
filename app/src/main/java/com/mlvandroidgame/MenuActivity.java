@@ -28,7 +28,19 @@ public class MenuActivity extends Activity {
         this.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO partager l'apps
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+
+                String shareBody = getResources().getString(R.string.share_start) + " " + 100
+                        + " " + getResources().getString(R.string.share_end);
+
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                        getResources().getString(R.string.share));
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+
+                startActivity(Intent.createChooser(sharingIntent,
+                        getResources().getString(R.string.share_via)));
             }
         });
 
