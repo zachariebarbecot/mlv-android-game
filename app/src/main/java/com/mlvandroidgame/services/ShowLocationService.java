@@ -16,6 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.mlvandroidgame.R;
+import com.mlvandroidgame.utils.ScoreSingleton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +29,8 @@ public class ShowLocationService extends Service {
     private static final String TAG = "GPS_SERVICE";
     private GpsService gpsService;
     private LocationManager locationManager;
+    private double latitude, longitude;
+    private Date dateGps;
 
     private boolean first = true;
 
@@ -38,18 +41,13 @@ public class ShowLocationService extends Service {
 
         @Override
         public void onLocationChanged(Location location) {
+            System.out.println("YOLO");
             Log.e(TAG, "onLocationChanged: " + location);
             if (locationManager != null) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                Date dateGps = new Date(location.getTime());
-
-                int score = 100;
-                gpsService = new GpsService(url, phoneNumber, imei, batteryPct,
-                        latitude, longitude, dateGps, new Date(), score);
-                gpsService.send();
-                Toast toast = Toast.makeText(getApplicationContext(), "GPS DATA SEND", Toast.LENGTH_SHORT);
-                toast.show();
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                dateGps = new Date(location.getTime());
+                System.out.println("SCORE: " + ScoreSingleton.getINSTANCE().getScore().getScore());
             }
         }
 
@@ -79,12 +77,21 @@ public class ShowLocationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
+        if(locationManager != null && ScoreSingleton.getINSTANCE().getScore().getScore() != 0) {
+            int score = ScoreSingleton.getINSTANCE().getScore().getScore();
+            gpsService = new GpsService(url, phoneNumber, imei, batteryPct,
+                    latitude, longitude, dateGps, new Date(), score);
+            gpsService.send();
+            Toast toast = Toast.makeText(getApplicationContext(), "GPS DATA SEND", Toast.LENGTH_SHORT);
+            toast.show();
+        }
         if(intent == null) {
             stopService(new Intent(this, ShowLocationService.class));
         } else{
             if(first) {
                 Bundle extras = intent.getExtras();
                 if(extras != null) {
+                    System.out.println("BUNDLE");
                     onCreate();
                     first = false;
                 }

@@ -95,7 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         LatLng paris = new LatLng(48.866667, 2.333333);
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(paris, 10.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(paris, 10.0f));
     }
 
     @Override
@@ -126,29 +126,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 JSONObject jsonObject = jsonParser.getJSONFromUrl(url);
 
                 Log.d("All Record: ", jsonObject.toString());
-                JSONArray jsonArray = jsonObject.getJSONArray("location");
+                if(!jsonObject.isNull("location")) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("location");
 
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject c = jsonArray.getJSONObject(i);
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject c = jsonArray.getJSONObject(i);
+                        // Storing each json item in variable
+                        String imei = c.getString("imei");
+                        String latitude = c.getString("latitude");
+                        String longitude = c.getString("longitude");
+                        String date_gps = c.getString("date_gps");
+                        String score = c.getString("score");
+                        // creating new HashMap
+                        HashMap<String, String> map = new HashMap<>();
 
-                    // Storing each json item in variable
-                    String imei = c.getString("imei");
-                    String latitude = c.getString("latitude");
-                    String longitude = c.getString("longitude");
-                    String date_gps = c.getString("date_gps");
-                    String score = c.getString("score");
-                    // creating new HashMap
-                    HashMap<String, String> map = new HashMap<String, String>();
-
-                    // adding each child node to HashMap key => value
-                    map.put("imei", imei);
-                    map.put("latitude", latitude);
-                    map.put("longitude", longitude);
-                    map.put("date_gps", date_gps);
-                    map.put("score", score);
-                    // adding HashList to ArrayList
-                    players.add(map);
+                        // adding each child node to HashMap key => value
+                        map.put("imei", imei);
+                        map.put("latitude", latitude);
+                        map.put("longitude", longitude);
+                        map.put("date_gps", date_gps);
+                        map.put("score", score);
+                        // adding HashList to ArrayList
+                        players.add(map);
+                    }
                 }
             }
             catch (JSONException e) {

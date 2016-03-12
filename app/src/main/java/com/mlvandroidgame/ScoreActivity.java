@@ -8,7 +8,11 @@ import android.widget.TextView;
 import com.mlvandroidgame.databases.Score;
 import com.mlvandroidgame.databases.ScoreDataSource;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ScoreActivity extends Activity {
 
@@ -37,10 +41,11 @@ public class ScoreActivity extends Activity {
 
         ScoreDataSource scoreDataSource = new ScoreDataSource(this);
         ArrayList<Score> scoreArrayList = scoreDataSource.getTopFiveScore();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         if(!scoreArrayList.isEmpty()){
             for (int i = 0; i < scoreArrayList.size(); i++) {
-                this.dates[i].setText(scoreArrayList.get(i).getDate().toString());
-                this.scores[i].setText(scoreArrayList.get(i).getScore());
+                this.dates[i].setText(dateFormat.format(scoreArrayList.get(i).getDate()));
+                this.scores[i].setText(scoreArrayList.get(i).getScore() + "");
             }
         }
     }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.mlvandroidgame.utils.ScoreSingleton;
+
 public class MenuActivity extends Activity {
 
     private Button share, game, score,licence, map;
@@ -32,7 +34,8 @@ public class MenuActivity extends Activity {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
 
-                String shareBody = getResources().getString(R.string.share_start) + " " + 100
+                String shareBody = getResources().getString(R.string.share_start) + " " + ScoreSingleton.getINSTANCE()
+                        .getScore().getScore()
                         + " " + getResources().getString(R.string.share_end);
 
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,

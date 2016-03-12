@@ -66,7 +66,7 @@ public class ScoreDataSource {
                         long id = Long.
                                 parseLong(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID)));
 
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRENCH);
                         Date date = null;
                         date = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DATE)));
                         int score = Integer
@@ -104,9 +104,8 @@ public class ScoreDataSource {
                         long id = Long.
                                 parseLong(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID)));
 
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                        Date date = null;
-                        date = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DATE)));
+                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                        Date date = dateFormat.parse(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DATE)));
                         int score = Integer
                                 .parseInt(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_SCORE)));
 
