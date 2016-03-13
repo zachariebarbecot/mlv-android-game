@@ -34,9 +34,6 @@ public class SplashActivity extends Activity {
          */
         TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         this.imei=mngr.getDeviceId();
-        if(imei == null) {
-            this.finish();
-        }
 
         this.adminDataSource = new AdminDataSource(this);
 

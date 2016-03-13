@@ -1,56 +1,73 @@
 package com.mlvandroidgame;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
-
-import com.mlvandroidgame.databases.Score;
-import com.mlvandroidgame.databases.ScoreDataSource;
-import com.mlvandroidgame.utils.ScoreSingleton;
-
-import java.util.Date;
-import java.util.Random;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+import com.mlvandroidgame.game.GameView;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends Activity {
 
-    private ScoreDataSource scoreDataSource;
+    private GameView gameView;
+    private Timer timer;
+    private int second;
+    private Handler handler;
+    private TimerTask timerTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_game);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
 
-        this.scoreDataSource = new ScoreDataSource(this);
+        this.second = 3000;
+        this.handler = new Handler();
+
+        gameView = new GameView(this);
+        setContentView(gameView);
     }
+
 
     @Override
-    protected  void onStart() {
-        super.onStart();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Random r = new Random();
-                int i = r.nextInt(100);
-                Score score = new Score(new Date(), i);
-                ScoreSingleton.getINSTANCE().setScore(score);
-                scoreDataSource.addScore(score);
-                Toast toast = Toast.makeText(getApplicationContext(),"Score: " + score.getScore(), Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(GameActivity.this, SplashActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, 5000);
+    protected void onResume() {
+        super.onResume();
+        startTimer();
     }
+
 
     @Override
     public void onBackPressed() {
         Intent i = new Intent(GameActivity.this, MenuActivity.class);
         startActivity(i);
         finish();
+    }
+
+
+    public void startTimer() {
+        this.timer = new Timer();
+        initializeTimerTask();
+        this.timer.schedule(timerTask, 1000, second);
+    }
+
+    public void initializeTimerTask() {
+        this.timerTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        if (gameView.getBall().isMoving()) {
+                            gameView.createCube();
+                        }
+                    }
+                });
+            }
+        };
+
     }
 }

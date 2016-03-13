@@ -41,13 +41,11 @@ public class ShowLocationService extends Service {
 
         @Override
         public void onLocationChanged(Location location) {
-            System.out.println("YOLO");
             Log.e(TAG, "onLocationChanged: " + location);
             if (locationManager != null) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 dateGps = new Date(location.getTime());
-                System.out.println("SCORE: " + ScoreSingleton.getINSTANCE().getScore().getScore());
             }
         }
 
